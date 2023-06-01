@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:07:23 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/01 17:25:14 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:32:58 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_arg	*arg_init(int argc, char **argv)
 	{
 		arg = malloc(sizeof(t_arg));
 		if (!arg)
-			return (0);
+			return (NULL);
 		arg->total = ft_atoi(argv[1]);
 		arg->death = ft_atoi(argv[2]);
 		arg->eat = ft_atoi(argv[3]);
