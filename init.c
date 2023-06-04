@@ -6,42 +6,55 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:07:23 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/01 17:32:58 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/04 14:55:03 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		parse_input(int argc, char **argv)
+int	mutex_init(t_arg *arg)
 {
-	if (argc < 5 || argc > 6)
+	int	i;
+
+	i = 0;
+	while (i++ < arg->total)
 	{
-		printf("wrong amount of arguments: ./philo 2 800 200 200 (200)\n");
-		return (1);
+		if (pthread_mutex_init(&arg->forks[i], NULL))
+			return (1);
+		printf("fork init\n");
 	}
-	if (isvalid(argc, argv) != 0)
-		return (2);
-	else
-		return (0);
+	return (0);
 }
 
-t_arg	*arg_init(int argc, char **argv)
+int	id_init(t_id *id)
 {
-	t_arg	*arg;
+	int	i;
 
+	i = 0;
+	while (i < id->arg.total)
+	{
+		id[i]->id = i;
+		id[i]->id_ate = 0;
+		id[i]->lfork_id = i;
+		id[i]->rfork_id = (i + 1) % id->arg.total;
+		id[i]->t_lastmeal = 0;
+	}
+	return (0);
+}
+
+
+int	arg_init(int argc, char **argv, t_arg *arg)
+{
 	if (parse_input(argc, argv) == 0)
 	{
-		arg = malloc(sizeof(t_arg));
-		if (!arg)
-			return (NULL);
 		arg->total = ft_atoi(argv[1]);
 		arg->death = ft_atoi(argv[2]);
 		arg->eat = ft_atoi(argv[3]);
 		arg->sleep = ft_atoi(argv[4]);
 		if (argc == 6)
 			arg->m_eat = ft_atoi(argv[5]);
-		return (arg);
+		return (0);
 	}
 	else
-		return (NULL);
+		return (1);
 }

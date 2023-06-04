@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:24:19 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/01 17:22:27 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/04 13:08:15 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,17 @@ int	isvalid(int argc, char **argv)
 		return (1);
 	}
 	return (0);
+}
+
+int		parse_input(int argc, char **argv)
+{
+	if (argc < 5 || argc > 6)
+	{
+		printf("wrong amount of arguments: ./philo 2 800 200 200 (200)\n");
+		return (1);
+	}
+	if (isvalid(argc, argv) != 0)
+		return (2);
+	else
+		return (0);
 }
