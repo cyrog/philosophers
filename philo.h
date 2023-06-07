@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:46:48 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/02 14:32:53 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/06 18:10:29 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,46 @@
 # include <sys/types.h>
 # include <sys/time.h>
 
-typedef struct	s_arg
+typedef struct	s_philo
 {
-	int		total;
-	int		death;
-	int		eat;
-	int		sleep;
-	int		m_eat;
-}				t_arg;
+	int				id;
+	int				x_ate;
+	int				l_fork;
+	int				r_fork;
+	long long		t_lastmeal;
+	pthread_t		thread_id;
+	struct s_rules	*rules;
+}					t_philo;
+
+typedef struct	s_rules
+{
+	int				total;
+	int				death;
+	int				eat;
+	int				sleep;
+	int				m_eat;
+	int				died;
+	int				all_ate;
+	long long		first_timestamp;
+	pthread_mutex_t	forks[250];
+	pthread_mutex_t	meal_check;
+	pthread_mutex_t	writing;
+	t_philo			philo[250];
+}				t_rules;
 
 int		parse_input(int argc, char **argv);
-t_arg	arg_init(int argc, char **argv);
+int		arg_init(t_rules *rules, int argc, char **argv);
+
+long long	timestamp(void);
+long long	timediff(long long past, long long pres);
+void		print_action(t_rules *rules, int id, char *msg);
+void		smart_sleep(long long time, t_rules *rules);
+
+int			threading(t_rules *rules);
+void		exit_threading(t_rules *rules, t_philo *philo);
 
 int		ft_atoi(const char *str);
 int		isdigitok(char **argv);
 int		isvalid(int argc, char **argv);
-
-void	*routine(t_arg *arg);
 
 #endif
