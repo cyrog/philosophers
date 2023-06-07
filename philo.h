@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:46:48 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/06 13:58:37 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/06 18:10:29 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ typedef struct	s_rules
 
 int		parse_input(int argc, char **argv);
 int		arg_init(t_rules *rules, int argc, char **argv);
+
+long long	timestamp(void);
+long long	timediff(long long past, long long pres);
+void		print_action(t_rules *rules, int id, char *msg);
+void		smart_sleep(long long time, t_rules *rules);
+
+int			threading(t_rules *rules);
+void		exit_threading(t_rules *rules, t_philo *philo);
 
 int		ft_atoi(const char *str);
 int		isdigitok(char **argv);

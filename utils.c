@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:46:33 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/06 14:02:57 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/06 17:03:45 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ long long	timestamp(void)
 long long	timediff(long long past, long long pres)
 {
 	return (past - pres);
+}
+
+void		smart_sleep(long long time, t_rules *rules)
+{
+	long long i;
+
+	i = timestamp();
+	while (!(rules->died))
+	{
+		if (timediff(i, timestamp()) >= time)
+			break ;
+			usleep(50);
+	}
 }
 
 void	print_action(t_rules *rules, int id, char *msg)

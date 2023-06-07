@@ -8,8 +8,8 @@
 ################################################################################
 
 NAME        := philo
-CC        := gcc
-FLAGS    := -g -Wall -Wextra -Werror
+CC         := gcc 
+FLAGS    := -Wall -Wextra -Werror
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
@@ -17,6 +17,8 @@ FLAGS    := -g -Wall -Wextra -Werror
 SRCS        :=      init.c \
                           philo.c \
 						  parse_utils.c	\
+						  utils.c	\
+						  threading.c	\
                           
 OBJS        := $(SRCS:.c=.o)
 
@@ -38,7 +40,7 @@ RM		    := rm -f
 
 ${NAME}:	${OBJS}
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} -o ${NAME} ${OBJS}
+			${CC} ${FLAGS} -o ${NAME} ${OBJS} -lpthread
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
 all:		${NAME}
