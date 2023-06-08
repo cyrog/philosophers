@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 13:55:40 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/07 15:50:45 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/08 09:59:36 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	*philo_thread(void *void_philosopher)
 	philo = (t_philo *)void_philosopher;
 	rules = philo->rules;
 	if (philo->id % 2)
-		usleep(15000);
-	while (42)
+		usleep(10000);
+	while (!(rules->died))
 	{
 		philo_eats(philo);
 		if (rules->all_ate)
@@ -108,6 +108,7 @@ int		threading(t_rules *rules)
 	t_philo	*philo;
 
 	i = 0;
+
 	philo = rules->philo;
 	rules->first_timestamp = timestamp();
 	while (i < rules->total)
