@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 13:55:40 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/08 09:59:36 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/08 16:16:03 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,13 @@ void	philo_eats(t_philo *philo)
 
 void	*philo_thread(void *void_philosopher)
 {
-	int				i;
 	t_philo			*philo;
 	t_rules			*rules;
 
-	i = 0;
 	philo = (t_philo *)void_philosopher;
 	rules = philo->rules;
 	if (philo->id % 2)
-		usleep(10000);
+		usleep(1500);
 	while (!(rules->died))
 	{
 		philo_eats(philo);
@@ -50,27 +48,20 @@ void	*philo_thread(void *void_philosopher)
 		print_action(rules, philo->id, "is sleeping");
 		smart_sleep(rules->sleep, rules);
 		print_action(rules, philo->id, "is thinking");
-		i++;
 	}
 	return (NULL);
 }
 
-void	exit_launcher(t_rules *rules, t_philo *philo)
+void	exit_threading(t_rules *rules, t_philo *philo)
 {
 	int i;
 
-	i = 0;
-	while (i < rules->total)
-	{
+	i = -1;
+	while (++i < rules->total)
 		pthread_join(philo[i].thread_id, NULL);
-		i++;
-	}
-	i = 0;
-	while (i < rules->total)
-	{
+	i = -1;
+	while (++i < rules->total)
 		pthread_mutex_destroy(&(rules->forks[i]));
-		i++;
-	}
 	pthread_mutex_destroy(&(rules->writing));
 }
 
@@ -108,7 +99,6 @@ int		threading(t_rules *rules)
 	t_philo	*philo;
 
 	i = 0;
-
 	philo = rules->philo;
 	rules->first_timestamp = timestamp();
 	while (i < rules->total)
@@ -119,6 +109,6 @@ int		threading(t_rules *rules)
 		i++;
 	}
 	death_checker(rules, rules->philo);
-	exit_launcher(rules, philo);
+	exit_threading(rules, philo);
 	return (0);
 }

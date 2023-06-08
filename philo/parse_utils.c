@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:24:19 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/01 17:22:27 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/08 15:38:35 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	isvalid(int argc, char **argv)
 		return (1);
 	}
 	i = 2;
-	while (i < argc)
+	while (i < argc -1)
 	{
 		if (ft_atoi(argv[i]) <= 60)
 		{

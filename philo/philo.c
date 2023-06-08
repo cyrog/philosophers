@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:05:36 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/07 16:36:12 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/08 15:52:45 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		main(int argc, char **argv)
 
 	if (arg_init(&rules, argc, argv) != 0)
 		return (1);
-	if (threading(&rules))
+	if (threading(&rules) == 1)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:07:23 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/07 16:36:32 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/08 14:57:13 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		arg_init(t_rules *rules, int argc, char **argv)
 		rules->death = ft_atoi(argv[2]);
 		rules->eat = ft_atoi(argv[3]);
 		rules->sleep = ft_atoi(argv[4]);
+		rules->died = 0;
 		rules->all_ate = 0;
 		if (argc == 6)
 			rules->m_eat = ft_atoi(argv[5]);
