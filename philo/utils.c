@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:46:33 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/08 16:17:48 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/09 10:01:42 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ long long	timediff(long long past, long long pres)
 	return (pres - past);
 }
 
-void		smart_sleep(long long time, t_rules *rules)
+void		smoll_sleep(long long time, t_rules *rules)
 {
 	long long i;
 

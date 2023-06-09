@@ -14,11 +14,11 @@ FLAGS    := -Wall -Wextra -Werror
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
 
-SRCS        :=      init.c \
-                          philo.c \
-						  parse_utils.c	\
-						  utils.c	\
-						  threading.c	\
+SRCS        :=			main.c \
+							init.c	\
+							parse_utils.c	\
+							utils.c	\
+							threading.c	\
                           
 OBJS        := $(SRCS:.c=.o)
 

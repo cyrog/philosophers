@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:05:36 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/08 15:52:45 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/09 10:46:49 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,22 @@
 int		main(int argc, char **argv)
 {
 	t_rules	rules;
+	t_philo	*philo;
+	int		i;
 
+	i = 0;
+	philo = rules.philo;
+	rules.first_timestamp = timestamp();
 	if (arg_init(&rules, argc, argv) != 0)
 		return (1);
-	if (threading(&rules) == 1)
-		return (1);
+	while (i < rules.total)
+	{
+		if (pthread_create(&(philo[i].thread_id), NULL, routine, &(philo[i])))
+			return (1);
+		philo[i].t_lastmeal = timestamp();
+		i++;
+	}
+	death_checker(&rules, rules.philo);
+	exit_threading(&rules, philo);
 	return (0);
 }

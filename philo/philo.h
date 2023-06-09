@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:46:48 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/06 18:10:29 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/09 10:46:41 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ int		arg_init(t_rules *rules, int argc, char **argv);
 long long	timestamp(void);
 long long	timediff(long long past, long long pres);
 void		print_action(t_rules *rules, int id, char *msg);
-void		smart_sleep(long long time, t_rules *rules);
+void		smoll_sleep(long long time, t_rules *rules);
 
+void		philo_eats(t_philo *philo);
+void		*routine(void *void_philosopher);
+void		death_checker(t_rules *rules, t_philo *philo);
 int			threading(t_rules *rules);
 void		exit_threading(t_rules *rules, t_philo *philo);
 

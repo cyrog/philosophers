@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 13:55:40 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/08 16:16:03 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/09 10:50:03 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@ void	philo_eats(t_philo *philo)
 	print_action(rules, philo->id, "is eating");
 	philo->t_lastmeal = timestamp();
 	pthread_mutex_unlock(&(rules->meal_check));
-	smart_sleep(rules->eat, rules);
-	(philo->x_ate)++;
+	smoll_sleep(rules->eat, rules);
+	philo->x_ate++;
+	printf("x_ate: %d\n", philo->x_ate);
 	pthread_mutex_unlock(&(rules->forks[philo->l_fork]));
 	pthread_mutex_unlock(&(rules->forks[philo->r_fork]));
 }
 
-void	*philo_thread(void *void_philosopher)
+void	*routine(void *void_philo)
 {
 	t_philo			*philo;
 	t_rules			*rules;
 
-	philo = (t_philo *)void_philosopher;
+	philo = (t_philo *)void_philo;
 	rules = philo->rules;
 	if (philo->id % 2)
 		usleep(1500);
@@ -46,7 +47,7 @@ void	*philo_thread(void *void_philosopher)
 		if (rules->all_ate)
 			break ;
 		print_action(rules, philo->id, "is sleeping");
-		smart_sleep(rules->sleep, rules);
+		smoll_sleep(rules->sleep, rules);
 		print_action(rules, philo->id, "is thinking");
 	}
 	return (NULL);
@@ -91,24 +92,4 @@ void	death_checker(t_rules *rules, t_philo *philo)
 		if (i == rules->total)
 			rules->all_ate = 1;
 	}
-}
-
-int		threading(t_rules *rules)
-{
-	int		i;
-	t_philo	*philo;
-
-	i = 0;
-	philo = rules->philo;
-	rules->first_timestamp = timestamp();
-	while (i < rules->total)
-	{
-		if (pthread_create(&(philo[i].thread_id), NULL, philo_thread, &(philo[i])))
-			return (1);
-		philo[i].t_lastmeal = timestamp();
-		i++;
-	}
-	death_checker(rules, rules->philo);
-	exit_threading(rules, philo);
-	return (0);
 }
