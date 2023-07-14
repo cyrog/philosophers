@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:46:33 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/09 10:01:42 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/14 14:15:40 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long long	timestamp(void)
 {
-	struct timeval t;
+	struct timeval	t;
 
 	gettimeofday(&t, NULL);
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
@@ -25,9 +25,9 @@ long long	timediff(long long past, long long pres)
 	return (pres - past);
 }
 
-void		smoll_sleep(long long time, t_rules *rules)
+void	smoll_sleep(long long time, t_rules *rules)
 {
-	long long i;
+	long long	i;
 
 	i = timestamp();
 	while (!(rules->died))

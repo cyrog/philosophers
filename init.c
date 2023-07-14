@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:07:23 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/08 14:57:13 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/19 12:53:01 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		parse_input(int argc, char **argv)
+int	parse_input(int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
 	{
@@ -25,7 +25,7 @@ int		parse_input(int argc, char **argv)
 		return (0);
 }
 
-int		mutex_init(t_rules *rules)
+int	mutex_init(t_rules *rules)
 {
 	int	i;
 
@@ -42,7 +42,7 @@ int		mutex_init(t_rules *rules)
 	return (0);
 }
 
-int		philo_init(t_rules *rules)
+int	philo_init(t_rules *rules)
 {
 	int	i;
 
@@ -59,15 +59,14 @@ int		philo_init(t_rules *rules)
 	return (0);
 }
 
-
-int		arg_init(t_rules *rules, int argc, char **argv)
+int	arg_init(t_rules *rules, int argc, char **argv)
 {
 	if (parse_input(argc, argv) == 0)
 	{
 		rules->total = ft_atoi(argv[1]);
-		rules->death = ft_atoi(argv[2]);
-		rules->eat = ft_atoi(argv[3]);
-		rules->sleep = ft_atoi(argv[4]);
+		rules->t_death = ft_atoi(argv[2]);
+		rules->t_eat = ft_atoi(argv[3]);
+		rules->t_sleep = ft_atoi(argv[4]);
 		rules->died = 0;
 		rules->all_ate = 0;
 		if (argc == 6)

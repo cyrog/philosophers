@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:46:48 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/09 10:46:41 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/14 14:12:29 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/types.h>
 # include <sys/time.h>
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				x_ate;
@@ -32,12 +32,12 @@ typedef struct	s_philo
 	struct s_rules	*rules;
 }					t_philo;
 
-typedef struct	s_rules
+typedef struct s_rules
 {
 	int				total;
-	int				death;
-	int				eat;
-	int				sleep;
+	int				t_death;
+	int				t_eat;
+	int				t_sleep;
 	int				m_eat;
 	int				died;
 	int				all_ate;
@@ -45,11 +45,12 @@ typedef struct	s_rules
 	pthread_mutex_t	forks[250];
 	pthread_mutex_t	meal_check;
 	pthread_mutex_t	writing;
+	pthread_mutex_t	death_check;
 	t_philo			philo[250];
 }				t_rules;
 
-int		parse_input(int argc, char **argv);
-int		arg_init(t_rules *rules, int argc, char **argv);
+int			parse_input(int argc, char **argv);
+int			arg_init(t_rules *rules, int argc, char **argv);
 
 long long	timestamp(void);
 long long	timediff(long long past, long long pres);
@@ -62,8 +63,8 @@ void		death_checker(t_rules *rules, t_philo *philo);
 int			threading(t_rules *rules);
 void		exit_threading(t_rules *rules, t_philo *philo);
 
-int		ft_atoi(const char *str);
-int		isdigitok(char **argv);
-int		isvalid(int argc, char **argv);
+int			ft_atoi(const char *str);
+int			isdigitok(char **argv);
+int			isvalid(int argc, char **argv);
 
 #endif

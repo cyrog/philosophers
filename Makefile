@@ -9,7 +9,7 @@
 
 NAME        := philo
 CC         := gcc 
-FLAGS    := -Wall -Wextra -Werror
+FLAGS    := -Wall -Wextra -Werror -g3 -fsanitize=thread
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
@@ -58,5 +58,3 @@ fclean:		clean
 re:			fclean all
 
 .PHONY:		all clean fclean re
-
-

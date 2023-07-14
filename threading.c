@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threading.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 13:55:40 by cgross            #+#    #+#             */
-/*   Updated: 2023/06/09 10:50:03 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:39:00 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philo_eats(t_philo *philo)
 {
-	t_rules *rules;
+	t_rules	*rules;
 
 	rules = philo->rules;
 	pthread_mutex_lock(&(rules->forks[philo->l_fork]));
@@ -25,9 +25,8 @@ void	philo_eats(t_philo *philo)
 	print_action(rules, philo->id, "is eating");
 	philo->t_lastmeal = timestamp();
 	pthread_mutex_unlock(&(rules->meal_check));
-	smoll_sleep(rules->eat, rules);
-	philo->x_ate++;
-	printf("x_ate: %d\n", philo->x_ate);
+	smoll_sleep(rules->t_eat, rules);
+	(philo->x_ate++);
 	pthread_mutex_unlock(&(rules->forks[philo->l_fork]));
 	pthread_mutex_unlock(&(rules->forks[philo->r_fork]));
 }
@@ -43,11 +42,12 @@ void	*routine(void *void_philo)
 		usleep(1500);
 	while (!(rules->died))
 	{
+		death_checker(rules, rules->philo);
 		philo_eats(philo);
 		if (rules->all_ate)
 			break ;
 		print_action(rules, philo->id, "is sleeping");
-		smoll_sleep(rules->sleep, rules);
+		smoll_sleep(rules->t_sleep, rules);
 		print_action(rules, philo->id, "is thinking");
 	}
 	return (NULL);
@@ -55,7 +55,7 @@ void	*routine(void *void_philo)
 
 void	exit_threading(t_rules *rules, t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < rules->total)
@@ -68,7 +68,7 @@ void	exit_threading(t_rules *rules, t_philo *philo)
 
 void	death_checker(t_rules *rules, t_philo *philo)
 {
-	int i;
+	int	i;
 
 	while (!(rules->all_ate))
 	{
@@ -76,7 +76,7 @@ void	death_checker(t_rules *rules, t_philo *philo)
 		while (++i < rules->total && !(rules->died))
 		{
 			pthread_mutex_lock(&(rules->meal_check));
-			if (timediff(philo[i].t_lastmeal, timestamp()) > rules->death)
+			if (timediff(philo[i].t_lastmeal, timestamp()) > rules->t_death)
 			{
 				print_action(rules, i, "died");
 				rules->died = 1;
@@ -87,7 +87,8 @@ void	death_checker(t_rules *rules, t_philo *philo)
 		if (rules->died)
 			break ;
 		i = 0;
-		while (rules->m_eat != -1 && i < rules->total && philo[i].x_ate >= rules->m_eat)
+		while (rules->m_eat != -1 && i < rules->total && philo[i].x_ate
+			>= rules->m_eat)
 			i++;
 		if (i == rules->total)
 			rules->all_ate = 1;
